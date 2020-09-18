@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: build-db-job
+spec:
+  ttlSecondsAfterFinished: 5
+  template:
+    spec:
+      volumes:
+        - name: sqlite-db-volume
+          persistentVolumeClaim:
+            claimName: db-repo-claim
+      containers:
+      - name: build-db-job
+        image: kafka-streaming-py
+        imagePullPolicy: Never
+        command: ["python",  "python/build_db.py"]
+        env:
+        - name: DATABASE_PATH
+          value: "/data/results.db"
+        volumeMounts:
+          - mountPath: "/data"
+            name: sqlite-db-volume
+      restartPolicy: Never
+  backoffLimit: 4

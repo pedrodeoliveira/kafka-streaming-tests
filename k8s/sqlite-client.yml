@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sqlite-client
+spec:
+  selector:
+    matchLabels:
+      app: sqlite-client
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: sqlite-client
+    spec:
+      volumes:
+        - name: sqlite-db-volume
+          persistentVolumeClaim:
+            claimName: db-repo-claim
+      containers:
+      - name: sqlite-client
+        image: kafka-streaming-py
+        command:
+          - sh
+          - -c
+          - "exec tail -f /dev/null"
+        imagePullPolicy: Never
+        resources:
+          requests:
+            memory: 0.1G
+            cpu: 0.2
+          limits:
+            memory: 0.5G
+            cpu: 0.4
+        volumeMounts:
+          - mountPath: "/data"
+            name: sqlite-db-volume
