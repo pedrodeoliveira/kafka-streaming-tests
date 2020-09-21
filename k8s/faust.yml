@@ -23,10 +23,10 @@ spec:
         resources:
           requests:
             memory: 0.1G
-            cpu: 0.2
+            cpu: "0.2"
           limits:
             memory: 0.5G
-            cpu: 1
+            cpu: "1"
         env:
         - name: LOG_LEVEL
           value: "ERROR"
@@ -48,4 +48,4 @@ spec:
         - name: CONCURRENCY
           value: "100"
         - name: MAX_INFERENCE_TIME_MS
-          value: 50
+          value: "50"
