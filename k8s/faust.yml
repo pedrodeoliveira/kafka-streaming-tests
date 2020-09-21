@@ -16,9 +16,10 @@ spec:
     spec:
       containers:
       - name: faust
-        image: kafka-streaming-py
-        command: ["python", "python/streaming/faust.py", "worker", "--loglevel", "info"]
-        imagePullPolicy: Never
+        image: gcr.io/kafka-streaming-tests/kafka-streaming-py
+        command: ["python", "python/streaming/streaming_faust.py", "worker", "--loglevel",
+                  "info"]
+#        imagePullPolicy: Never
         resources:
           requests:
             memory: 0.1G

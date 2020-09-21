@@ -20,22 +20,22 @@ c = Consumer(settings)
 
 c.subscribe([KAFKA_TOPIC])
 consume_time = time.time()
-msgcount = 0
+msg_count = 0
 
 try:
-    while msgcount < 10000:
+    while msg_count < 10000:
         msg = c.poll(0.1)
         if msg is None:
             continue
         if msg.error():
-            print(f'Error occured: {msg.error().str()}')
+            print(f'Error occurred: {msg.error().str()}')
             continue
-        msgcount += 1
+        msg_count += 1
         data = json.loads(msg.value().decode('utf-8'))
         # time.sleep(0.015)
         # print(data)
         elapsed_time = time.time() - consume_time
-    print(f'Read {msgcount} msessages from {msg.topic()}-{msg.partition()} in '
+    print(f'Read {msg_count} messages from {msg.topic()}-{msg.partition()} in '
           f'{elapsed_time:.2f} seconds')
 except KeyboardInterrupt:
     pass

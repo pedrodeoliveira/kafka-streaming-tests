@@ -1,9 +1,11 @@
 #!/usr/bin/env python
+import asyncio
 import logging
 import faust
 import os
+from random import randint
 
-from ..common import generate_random_output_message
+from common import generate_random_output_message
 
 # kafka configs
 KAFKA_INPUT_TOPIC = os.getenv('KAFKA_TOPIC', 'input-topic')
@@ -45,16 +47,21 @@ output_topic = app.topic(KAFKA_OUTPUT_TOPIC, value_type=OutputData)
 
 
 @app.agent(input_topic, concurrency=CONCURRENCY)
-async def categorize_transaction(stream):
+async def process_event(stream):
     async for event in stream.events():
         value = event.value
-        logger.debug(f'received event with value: {value}')
+        key = event.key.decode('utf-8')
+        logger.debug(f'received event with key: {key} and value: {value}')
 
         publish_ts = (event.message.timestamp * 1000)
-        output_data = generate_random_output_message(value, publish_ts)
+        value_dict = value.asdict()
+        output_data = generate_random_output_message(value_dict, publish_ts)
+        random_inference_time_ms = randint(0, 50)
+        logger.debug(f'inference_time_ms: {random_inference_time_ms}')
+        await asyncio.sleep(random_inference_time_ms / 1000)
 
         output_msg = OutputData(**output_data)
-        await output_topic.send(value=output_msg)
+        await output_topic.send(key=key, value=output_msg)
 
 
 if __name__ == '__main__':

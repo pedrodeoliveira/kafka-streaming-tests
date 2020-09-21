@@ -5,7 +5,7 @@ import asyncio
 import json
 import os
 
-from ..common import generate_random_input_message
+from common import generate_random_input_message
 
 
 # kafka configs
@@ -39,9 +39,10 @@ async def send_one():
     try:
         # Produce message
         value = generate_random_input_message()
+        key = value['uid'].encode('utf-8')
         value_json = json.dumps(value).encode('utf-8')
-        logger.debug(f'sending msg: {value}')
-        await producer.send(KAFKA_TOPIC, value_json)
+        logger.debug(f'sending msg with key: {value["uid"]} and value: {value}')
+        await producer.send(KAFKA_TOPIC, value_json, key=key)
     except Exception as e:
         logger.error(e)
         # Wait for all pending messages to be delivered or expire.

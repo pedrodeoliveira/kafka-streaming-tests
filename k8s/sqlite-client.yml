@@ -20,7 +20,7 @@ spec:
             claimName: db-repo-claim
       containers:
       - name: sqlite-client
-        image: kafka-streaming-py
+        image: gcr.io/kafka-streaming-tests/kafka-streaming-py
         command:
           - sh
           - -c

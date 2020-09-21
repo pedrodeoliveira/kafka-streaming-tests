@@ -5,7 +5,7 @@ import asyncio
 import json
 import os
 
-from ..common import generate_random_input_message
+from common import generate_random_input_message
 
 loop = asyncio.get_event_loop()
 
@@ -21,9 +21,10 @@ async def send_one():
     try:
         # Produce message
         value = generate_random_input_message()
+        key = value['uid'].encode('utf-8')
         value_json = json.dumps(value).encode('utf-8')
         print(time.time())
-        await producer.send(KAFKA_TOPIC, value_json)
+        await producer.send(KAFKA_TOPIC, value_json, key=key)
     finally:
         # Wait for all pending messages to be delivered or expire.
         await producer.stop()

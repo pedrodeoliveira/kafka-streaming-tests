@@ -16,9 +16,9 @@ spec:
     spec:
       containers:
       - name: batch-producer
-        image: kafka-streaming-py
+        image: gcr.io/kafka-streaming-tests/kafka-streaming-py
         command: ["python", "python/producers/producer_batch.py"]
-        imagePullPolicy: Never
+#        imagePullPolicy: Never
         resources:
           requests:
             memory: 0.1G
@@ -39,5 +39,7 @@ spec:
             configMapKeyRef:
               name: kafka-configs
               key: bootstrap_servers
-        - name: NUMBER_OF_MSGS_PER_SECOND
+        - name: NUMBER_OF_MESSAGES
           value: "200"
+        - name: NUMBER_OF_SECONDS
+          value: "5"

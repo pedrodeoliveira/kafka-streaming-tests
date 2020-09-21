@@ -25,9 +25,10 @@ def generate_random_output_message(input_message: dict, publish_ts=None) -> dict
         "category": str(randint(1, 10)),
         "subcategory": str(randint(1, 100)),
         "confidence": random(),
+        "model": "model x",
         "version": randint(1, 100),
-        "streaming_consume_ts": time.time()
+        "streaming_consume_ts": int(time.time()*1000)
     }
     if publish_ts is not None:
-        output_message["publish_ts"] = publish_ts
+        output_message["publish_ts"] = int(publish_ts)
     return output_message

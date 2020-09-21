@@ -16,9 +16,9 @@ spec:
     spec:
       containers:
       - name: sequence-producer
-        image: kafka-streaming-py
+        image: gcr.io/kafka-streaming-tests/kafka-streaming-py
         command: ["python", "python/producers/producer_sequence.py"]
-        imagePullPolicy: Never
+#        imagePullPolicy: Never
         resources:
           requests:
             memory: 0.1G

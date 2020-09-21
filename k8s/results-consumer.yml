@@ -20,7 +20,7 @@ spec:
             claimName: model-repo-claim
       containers:
       - name: results-consumer
-        image: kafka-streaming-py
+        image: gcr.io/kafka-streaming-tests/kafka-streaming-py
         command: ["python", "python/results_consumer.py"]
         imagePullPolicy: Never
         resources:

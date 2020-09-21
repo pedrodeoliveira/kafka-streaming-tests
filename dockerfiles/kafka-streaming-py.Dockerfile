@@ -23,6 +23,6 @@ RUN apt-get update && \
 ENV PATH=/root/.local/bin:$PATH
 
 WORKDIR /src
-ENV PYTHONPATH=/src
+ENV PYTHONPATH=/src/python
 
 CMD [ "python" ]

@@ -5,7 +5,7 @@ import random
 import os
 from aiokafka.producer import AIOKafkaProducer
 
-from ..common import generate_random_input_message
+from common import generate_random_input_message
 
 # kafka configs
 KAFKA_TOPIC = os.getenv('KAFKA_TOPIC', 'input-topic')
@@ -17,14 +17,17 @@ logging.basicConfig(format='%(levelname)s:%(message)s', level=getattr(logging, l
 logger = logging.getLogger(__name__)
 
 # requested throughput (msgs/s)
-NUMBER_OF_MSGS_PER_SECOND = int(os.getenv('NUMBER_OF_MSGS_PER_SECOND', '40'))
+NUMBER_OF_MESSAGES = int(os.getenv('NUMBER_OF_MESSAGES', '40'))
+NUMBER_OF_SECONDS = int(os.getenv('NUMBER_OF_SECONDS', '1'))
 
 
 async def start_producer(loop):
+    logger.info(f'Starting producer with throughput of {NUMBER_OF_MESSAGES} messages per '
+                f'{NUMBER_OF_SECONDS} second(s)')
     while True:
-        await send_many(NUMBER_OF_MSGS_PER_SECOND, loop)
-        logger.info('batch sent')
-        await asyncio.sleep(1)
+        await send_many(NUMBER_OF_MESSAGES, loop)
+        logger.debug(f'Batch sent, sleeping {NUMBER_OF_SECONDS} second(s)')
+        await asyncio.sleep(NUMBER_OF_SECONDS)
 
 
 async def send_many(num, loop):
@@ -37,8 +40,9 @@ async def send_many(num, loop):
     i = 0
     while i < num:
         msg_data = generate_random_input_message()
+        key = msg_data['uid'].encode('utf-8')
         msg = json.dumps(msg_data).encode("utf-8")
-        metadata = batch.append(key=None, value=msg, timestamp=None)
+        metadata = batch.append(key=key, value=msg, timestamp=None)
         if metadata is None:
             partitions = await producer.partitions_for(topic)
             partition = random.choice(tuple(partitions))

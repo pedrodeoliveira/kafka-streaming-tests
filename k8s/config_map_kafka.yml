@@ -6,4 +6,3 @@ data:
   bootstrap_servers: "kafka.default.svc.cluster.local:9092"
   input_topic: "input-topic"
   output_topic: "output-topic"
-  topic_transaction_categorized: "transaction_categorized"
