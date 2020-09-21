@@ -3,7 +3,6 @@ kind: PersistentVolumeClaim
 metadata:
   name: db-repo-claim
 spec:
-  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   resources:
