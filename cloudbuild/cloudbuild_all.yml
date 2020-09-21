@@ -1,0 +1,17 @@
+steps:
+- name: "gcr.io/cloud-builders/docker"
+  args:
+  - build
+  - "--tag=gcr.io/$PROJECT_ID/kafka-streaming-py"
+  - "--file=./dockerfiles/kafka-streaming-py.Dockerfile"
+  - .
+  waitFor: ["-"]
+- name: "gcr.io/cloud-builders/docker"
+  args:
+  - build
+  - "--tag=gcr.io/$PROJECT_ID/kafka-streaming-java"
+  - "--file=./dockerfiles/kafka-streaming-java.Dockerfile"
+  - .
+  waitFor: ["-"]
+images: [
+  "gcr.io/$PROJECT_ID/kafka-streaming-py", "gcr.io/$PROJECT_ID/kafka-streaming-java"]
