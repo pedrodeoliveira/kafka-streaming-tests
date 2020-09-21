@@ -17,7 +17,7 @@ spec:
       volumes:
         - name: sqlite-db-volume
           persistentVolumeClaim:
-            claimName: model-repo-claim
+            claimName: db-repo-claim
       containers:
       - name: results-consumer
         image: gcr.io/kafka-streaming-tests/kafka-streaming-py
@@ -26,10 +26,10 @@ spec:
         resources:
           requests:
             memory: 0.1G
-            cpu: 0.2
+            cpu: "0.2"
           limits:
             memory: 0.5G
-            cpu: 1
+            cpu: "1"
         env:
         - name: LOG_LEVEL
           value: "INFO"

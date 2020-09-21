@@ -12,7 +12,7 @@ spec:
             claimName: db-repo-claim
       containers:
       - name: build-db-job
-        image: kafka-streaming-py
+        image: gcr.io/kafka-streaming-tests/kafka-streaming-py
         imagePullPolicy: Never
         command: ["python",  "python/build_db.py"]
         env:
