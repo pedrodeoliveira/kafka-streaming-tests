@@ -1,24 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: faust
+  name: kafka-streams
 spec:
   selector:
     matchLabels:
-      app: faust
+      app: kafka-streams
   replicas: 1
   strategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
-        app: faust
+        app: kafka-streams
     spec:
       containers:
-      - name: faust
-        image: gcr.io/kafka-streaming-tests/kafka-streaming-py
-        command: ["python", "python/streaming/streaming_faust.py", "worker", "--loglevel",
-                  "info"]
+      - name: kafka-streams
+        image: gcr.io/kafka-streaming-tests/kafka-streaming-java
 #        imagePullPolicy: Never
         resources:
           requests:

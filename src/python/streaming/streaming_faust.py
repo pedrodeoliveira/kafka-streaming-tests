@@ -19,6 +19,7 @@ logger = logging.getLogger(__name__)
 
 # agents' configs
 CONCURRENCY = int(os.getenv('CONCURRENCY', 200))
+MAX_INFERENCE_TIME_MS = int(os.getenv('MAX_INFERENCE_TIME_MS', 50))
 
 # initialize Faust App
 app = faust.App('streaming_faust', broker=f'kafka://{KAFKA_BOOTSTRAP_SERVERS}')
@@ -56,7 +57,7 @@ async def process_event(stream):
         publish_ts = (event.message.timestamp * 1000)
         value_dict = value.asdict()
         output_data = generate_random_output_message(value_dict, publish_ts)
-        random_inference_time_ms = randint(0, 50)
+        random_inference_time_ms = randint(0, MAX_INFERENCE_TIME_MS)
         logger.debug(f'inference_time_ms: {random_inference_time_ms}')
         await asyncio.sleep(random_inference_time_ms / 1000)
 
