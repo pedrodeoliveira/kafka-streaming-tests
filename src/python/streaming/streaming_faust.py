@@ -8,8 +8,8 @@ from random import randint
 from common import generate_random_output_message
 
 # kafka configs
-KAFKA_INPUT_TOPIC = os.getenv('KAFKA_TOPIC', 'input-topic')
-KAFKA_OUTPUT_TOPIC = os.getenv('KAFKA_TOPIC', 'output-topic')
+KAFKA_INPUT_TOPIC = os.getenv('KAFKA_INPUT_TOPIC', 'input-topic')
+KAFKA_OUTPUT_TOPIC = os.getenv('KAFKA_OUTPUT_TOPIC', 'output-topic')
 KAFKA_BOOTSTRAP_SERVERS = os.getenv('KAFKA_BOOTSTRAP_SERVERS', 'localhost:9092')
 
 # log configuration
