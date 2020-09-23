@@ -17,7 +17,8 @@ spec:
       volumes:
         - name: sqlite-db-volume
           persistentVolumeClaim:
-            claimName: db-repo-claim
+            claimName: repo-claim
+            readOnly: true
       containers:
       - name: sqlite-client
         image: gcr.io/kafka-streaming-tests/kafka-streaming-py
@@ -25,7 +26,7 @@ spec:
           - sh
           - -c
           - "exec tail -f /dev/null"
-        imagePullPolicy: Never
+        # imagePullPolicy: Never
         resources:
           requests:
             memory: 0.1G
@@ -36,3 +37,4 @@ spec:
         volumeMounts:
           - mountPath: "/data"
             name: sqlite-db-volume
+            readOnly: true

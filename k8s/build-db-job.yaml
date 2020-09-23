@@ -9,11 +9,11 @@ spec:
       volumes:
         - name: sqlite-db-volume
           persistentVolumeClaim:
-            claimName: db-repo-claim
+            claimName: repo-claim
       containers:
       - name: build-db-job
         image: gcr.io/kafka-streaming-tests/kafka-streaming-py
-        imagePullPolicy: Never
+        # imagePullPolicy: Never
         command: ["python",  "python/build_db.py"]
         env:
         - name: DATABASE_PATH

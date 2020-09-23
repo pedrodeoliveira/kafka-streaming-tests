@@ -48,4 +48,4 @@ spec:
         - name: CONCURRENCY
           value: "100"
         - name: MAX_INFERENCE_TIME_MS
-          value: "50"
+          value: "100"

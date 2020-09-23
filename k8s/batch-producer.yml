@@ -40,6 +40,6 @@ spec:
               name: kafka-configs
               key: bootstrap_servers
         - name: NUMBER_OF_MESSAGES
-          value: "100"
+          value: "200"
         - name: NUMBER_OF_SECONDS
-          value: "1"
+          value: "5"

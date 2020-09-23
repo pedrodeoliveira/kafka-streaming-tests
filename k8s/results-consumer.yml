@@ -17,12 +17,12 @@ spec:
       volumes:
         - name: sqlite-db-volume
           persistentVolumeClaim:
-            claimName: db-repo-claim
+            claimName: repo-claim
       containers:
       - name: results-consumer
         image: gcr.io/kafka-streaming-tests/kafka-streaming-py
         command: ["python", "python/results_consumer.py"]
-        imagePullPolicy: Never
+        # imagePullPolicy: Never
         resources:
           requests:
             memory: 0.1G
