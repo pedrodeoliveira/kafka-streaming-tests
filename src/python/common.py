@@ -32,3 +32,16 @@ def generate_random_output_message(input_message: dict, publish_ts=None) -> dict
     if publish_ts is not None:
         output_message["publish_ts"] = int(publish_ts)
     return output_message
+
+
+def generate_random_output_data(input_data: dict) -> dict:
+    output_data = {
+        "uid": input_data["uid"],
+        "text": input_data["text"],
+        "category": str(randint(1, 10)),
+        "subcategory": str(randint(1, 100)),
+        "confidence": random(),
+        "model": "model x",
+        "version": randint(1, 100),
+    }
+    return output_data
